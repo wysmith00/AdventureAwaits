@@ -1,4 +1,5 @@
-import { BlogInfo } from "./models";
+import  BlogInfo  from "../models/models.js";
+import  Workout  from "../models/workoutSchema.js";
 
 async function createBlogInfo(req, res) {
     try {
@@ -54,3 +55,61 @@ async function deleteBlogInfo(req, res) {
         res.status(500).send(error);
     }
 };
+
+async function createWorkout(req, res) {
+    try {
+        const workout = new Workout(req.body);
+        await workout.save();
+        res.status(201).send(workout);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+};
+
+async function getAllWorkouts(req, res) {
+    try {
+        const workouts = await Workout.find();
+        res.status(200).send(workouts);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+async function getWorkoutById(req, res) {
+    try {
+        const workout = await Workout.findById(req.params.id);
+        if (!workout) {
+            return res.status(404).send();
+        }
+        res.send(workout);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+async function updateWorkout(req, res) {
+    try {
+        const workout = await Workout.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidatorrs: true});
+        if (!workout) {
+            return res.status(404).send();
+        }
+        res.send(workout);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+};
+
+async function deleteWorkout(req, res) {
+    try {
+        const workout = await Workout.findByIdAndDelete(req.params.id);
+        if (!workout) {
+            return res.status
+        }
+        res.send(workout);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+
+export {createBlogInfo, getAllBlogInfos, getBlogInfoById, updateBlogInfo, deleteBlogInfo, createWorkout, getAllWorkouts, getWorkoutById, updateWorkout, deleteWorkout}
