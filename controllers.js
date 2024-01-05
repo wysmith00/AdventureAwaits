@@ -1,5 +1,7 @@
-import  BlogInfo  from "../models/models.js";
-import  Workout  from "../models/workoutSchema.js";
+import  BlogInfo  from "./models/models.js";
+// Incorrect way, will lead to the 'Workout is not a constructor' error
+import Workout from './models/workoutSchema.js';
+
 
 async function createBlogInfo(req, res) {
     try {
@@ -34,7 +36,7 @@ async function getBlogInfoById(req, res) {
 
 async function updateBlogInfo(req, res) {
     try {
-        const blogInfo = await BlogInfo.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const blogInfo = await BlogInfo.findByIdAndUpdate(req.params.id);
         if(!blogInfo) {
             return res.status(404).send();
         }
@@ -56,17 +58,36 @@ async function deleteBlogInfo(req, res) {
     }
 };
 
+// //async function createWorkout(req, res) {
+//     console.log("Request Body:", req.body);
+//     let userWorkout = req.body;
+//     try {
+//         console.log("Finding workout:", userWorkout);
+//         const workout = await Workout.findOne({ workout : userWorkout });
+//         //await workout.save();//
+//         res.status(201).send(workout);
+//     } catch (error) {
+//         console.log("error encountered:", error.message);
+//         res.status(400).send(error);
+//     }
+// };
+
 async function createWorkout(req, res) {
+    console.log("Request Body:", req.body);
     try {
-        const workout = new Workout(req.body);
-        await workout.save();
+        // Create a new workout document using the .create() method
+        const workout = await Workout.create(req.body);
         res.status(201).send(workout);
     } catch (error) {
-        res.status(400).send(error);
+        console.log("error encountered:", error.message);
+        res.status(400).send(error.message);
     }
 };
 
+
+
 async function getAllWorkouts(req, res) {
+    console.log("Hello")
     try {
         const workouts = await Workout.find();
         res.status(200).send(workouts);

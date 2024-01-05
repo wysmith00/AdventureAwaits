@@ -1,8 +1,8 @@
-import 'dotenv' 
+import 'dotenv/config';
 
 import express from 'express'
 import cors from 'cors'
-import mongoose from 'mongoose'
+import './connection.js'
 import router from './routes.js'
 const app = express()
 
@@ -18,7 +18,8 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-const db = mongoose.connection;
+// const db = mongoose.connection;
+
 
 
 
