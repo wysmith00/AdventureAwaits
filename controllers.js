@@ -36,7 +36,8 @@ async function getBlogInfoById(req, res) {
 
 async function updateBlogInfoById(req, res) {
     try {
-        const blogInfo = await BlogInfo.findByIdAndUpdate(req.params.id);
+        const updateData = req.body;
+        const blogInfo = await BlogInfo.findByIdAndUpdate(req.params.id, updateData, { new: true });
         if(!blogInfo) {
             return res.status(404).send();
         }
