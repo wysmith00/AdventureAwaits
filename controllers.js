@@ -34,7 +34,7 @@ async function getBlogInfoById(req, res) {
     }
 };
 
-async function updateBlogInfo(req, res) {
+async function updateBlogInfoById(req, res) {
     try {
         const blogInfo = await BlogInfo.findByIdAndUpdate(req.params.id);
         if(!blogInfo) {
@@ -108,7 +108,7 @@ async function getWorkoutById(req, res) {
     }
 };
 
-async function updateWorkout(req, res) {
+async function updateWorkoutById(req, res) {
     try {
         const workout = await Workout.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidatorrs: true});
         if (!workout) {
@@ -133,4 +133,4 @@ async function deleteWorkout(req, res) {
 };
 
 
-export {createBlogInfo, getAllBlogInfos, getBlogInfoById, updateBlogInfo, deleteBlogInfo, createWorkout, getAllWorkouts, getWorkoutById, updateWorkout, deleteWorkout}
+export {createBlogInfo, getAllBlogInfos, getBlogInfoById, updateBlogInfoById, deleteBlogInfo, createWorkout, getAllWorkouts, getWorkoutById, updateWorkoutById, deleteWorkout}
